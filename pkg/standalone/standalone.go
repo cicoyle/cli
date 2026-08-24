@@ -190,6 +190,10 @@ func isBinaryInstallationRequired(binaryFilePrefix, binInstallDir string) (bool,
 // isSchedulerPlacementIncluded returns true if the scheduler can serve actor
 // placement in a given version of Dapr.
 func isSchedulerPlacementIncluded(runtimeVersion string) (bool, error) {
+	if runtimeVersion == "edge" || runtimeVersion == "dev" {
+		return true, nil
+	}
+
 	c, err := semver.NewConstraint(daprVersionsWithSchedulerPlacement)
 	if err != nil {
 		return false, err

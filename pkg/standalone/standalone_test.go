@@ -397,6 +397,8 @@ func TestIsSchedulerPlacementIncluded(t *testing.T) {
 		{"1.19.0-rc.1", true},
 		{"1.19.0", true},
 		{"1.20.0", true},
+		{"edge", true},
+		{"dev", true},
 	}
 	for _, scenario := range scenarios {
 		t.Run("isSchedulerPlacementIncludedIn"+scenario.version, func(t *testing.T) {

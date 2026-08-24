@@ -197,12 +197,12 @@ func restartControlPlaneService() error {
 			print.InfoStatusEvent(os.Stdout, fmt.Sprintf("Restarting %s..", name))
 			_, err := utils.RunCmdAndWait("kubectl", "rollout", "restart", "-n", namespace, name)
 			if err != nil {
-				errs[i] = fmt.Errorf("error in restarting deployment %s. Error is %w", name, err)
+				errs[i] = fmt.Errorf("error in restarting %s. Error is %w", name, err)
 				return
 			}
 			_, err = utils.RunCmdAndWait("kubectl", "rollout", "status", "-n", namespace, name)
 			if err != nil {
-				errs[i] = fmt.Errorf("error in checking status for deployment %s. Error is %w", name, err)
+				errs[i] = fmt.Errorf("error in checking status for %s. Error is %w", name, err)
 				return
 			}
 		}(i, name)
