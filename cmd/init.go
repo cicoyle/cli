@@ -47,6 +47,7 @@ var (
 	imageVariant                       string
 	schedulerVolume                    string
 	schedulerOverrideBroadcastHostPort string
+	schedulerPlacement                 bool
 	redisStack                         bool
 )
 
@@ -195,6 +196,7 @@ dapr init --redis-stack
 				DaprInstallPath:                    runtime.GetDaprRuntimePath(),
 				SchedulerVolume:                    &schedulerVolume,
 				SchedulerOverrideBroadcastHostPort: schedulerHostPort,
+				SchedulerPlacement:                 schedulerPlacement,
 				RedisStack:                         redisStack,
 			})
 			if err != nil {
@@ -245,6 +247,7 @@ func init() {
 	InitCmd.Flags().StringVarP(&imageVariant, "image-variant", "", "", "The image variant to use for the Dapr runtime, for example: mariner")
 	InitCmd.Flags().StringVarP(&schedulerVolume, "scheduler-volume", "", "dapr_scheduler", "Self-hosted only. Specify a volume for the scheduler service data directory.")
 	InitCmd.Flags().StringVarP(&schedulerOverrideBroadcastHostPort, "scheduler-override-broadcast-host-port", "", "", "Self-hosted only. Specify the scheduler broadcast host and port, for example: 192.168.42.42:50006. If not specified, it uses localhost:50006 (6060 for Windows).")
+	InitCmd.Flags().BoolVarP(&schedulerPlacement, "scheduler-placement", "", false, "Self-hosted only. Serve actor placement from the scheduler service instead of running the placement service. Requires Dapr 1.19 or later.")
 	InitCmd.Flags().BoolVarP(&redisStack, "redis-stack", "", false, "Self-hosted only. Use redis-stack-server image instead of standard Redis for RediSearch support")
 	InitCmd.Flags().BoolP("help", "h", false, "Print this help message")
 	InitCmd.Flags().StringArrayVar(&values, "set", []string{}, "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)")

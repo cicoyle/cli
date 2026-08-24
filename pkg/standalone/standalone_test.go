@@ -386,6 +386,27 @@ func TestInitLogActualContainerRuntimeName(t *testing.T) {
 	}
 }
 
+func TestIsSchedulerPlacementIncluded(t *testing.T) {
+	scenarios := []struct {
+		version    string
+		isIncluded bool
+	}{
+		{"1.15.0", false},
+		{"1.17.0", false},
+		{"1.18.1", false},
+		{"1.19.0-rc.1", true},
+		{"1.19.0", true},
+		{"1.20.0", true},
+	}
+	for _, scenario := range scenarios {
+		t.Run("isSchedulerPlacementIncludedIn"+scenario.version, func(t *testing.T) {
+			included, err := isSchedulerPlacementIncluded(scenario.version)
+			assert.NoError(t, err)
+			assert.Equal(t, scenario.isIncluded, included)
+		})
+	}
+}
+
 func TestIsSchedulerIncluded(t *testing.T) {
 	scenarios := []struct {
 		version    string
